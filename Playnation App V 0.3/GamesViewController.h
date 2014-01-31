@@ -15,5 +15,6 @@
 @property (strong,nonatomic) NSArray *gamesTableArray;
 @property (weak, nonatomic)NSString *gameDescription;
 @property (weak, nonatomic)NSString *gameName;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @end

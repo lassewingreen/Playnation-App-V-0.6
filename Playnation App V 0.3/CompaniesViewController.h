@@ -13,4 +13,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *CompaniesTableView;
 @property (strong,nonatomic) NSArray *companiesJsonWrapper;
 @property (strong,nonatomic) NSArray *companiesTableArray;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+
 @end

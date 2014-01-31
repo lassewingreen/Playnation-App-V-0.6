@@ -8,6 +8,7 @@
 
 #import "GamesViewController.h"
 #import "NSString+StripHTMLwithRegEX.h"
+#import "SWRevealViewController.h"
 
 @interface GamesViewController ()
 
@@ -30,7 +31,12 @@
 {
     [super viewDidLoad];
     self.title = @"Games";
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    _sidebarButton.target = self.revealViewController;
+    _sidebarButton.action = @selector(revealToggle:);
     
+    // Set the gesture
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     //  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     

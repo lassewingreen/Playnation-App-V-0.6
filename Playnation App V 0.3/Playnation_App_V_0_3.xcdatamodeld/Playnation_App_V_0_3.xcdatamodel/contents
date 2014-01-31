@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5041.1" systemVersion="13B42" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Companies" syncable="YES">
+        <attribute name="companyAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="employees" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="eventCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="founded" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="gameCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="iD_COMPANY" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLiked" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ownership" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="socialRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uRL" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Companies" positionX="-63" positionY="-18" width="128" height="285"/>
+    </elements>
 </model>

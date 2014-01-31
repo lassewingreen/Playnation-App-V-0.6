@@ -44,7 +44,7 @@
         NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
         
-        NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItem.php"];
+        NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItemiOS.php"];
         NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
         NSString * params =@"tableName=groups";
         [urlRequest setHTTPMethod:@"POST"];
@@ -58,22 +58,14 @@
                                                                
                                                                if(error == nil)
                                                                {
-                                                                   NSString * text = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
-                                                                   NSLog(@"Data = %@",text);
                                                                    
-                                                                   
-                                                                   NSString* mystring = text;
-                                                                   NSString* stripped = [mystring stripHTMLwithRegEX];
-                                                                   
-                                                                   NSLog(@"Stripped Data = %@",stripped);
-                                                                   
-                                                                   NSData* strippedJsonData = [stripped dataUsingEncoding:NSUTF8StringEncoding];
-                                                                   
+                                                                   NSLog(@"Data = %@",data);
+                                                                 
                                                                    
                                                                    NSError *jsonNewsError = nil;
                                                                    
                                                                    groupJsonWrapper = [NSJSONSerialization
-                                                                                           JSONObjectWithData:strippedJsonData
+                                                                                           JSONObjectWithData:data
                                                                                            options:NSJSONReadingAllowFragments
                                                                                            error:&jsonNewsError];
                                                                    

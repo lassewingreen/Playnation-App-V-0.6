@@ -47,7 +47,7 @@
         
         NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItemiOS.php"];
         NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-        NSString * params =@"tableName=games";
+        NSString * params =@"tableName=games&lastID=10";
         [urlRequest setHTTPMethod:@"POST"];
         [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
         

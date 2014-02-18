@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "CoreData+MagicalRecord.h"
+#import "AFNSyncEngine.h"
+#import "Companies.h"
+#import "Groups.h"
+
 
 @implementation AppDelegate
 
@@ -16,6 +21,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"Playnation_App_V_0_3.sqlite"];
+    
+    //[MagicalRecord setupCoreDataStackWithInMemoryStore];
+    
+    [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Companies class]];
+    [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Groups class]];
+    
+    
        return YES;
 }
 

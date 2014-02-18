@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>MagicalRecord.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Playnation App V 0.3.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>60253BE6189BB002008B0243</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AAE67D9D18B351C300C1914B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AAE67DAA18B351C300C1914B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

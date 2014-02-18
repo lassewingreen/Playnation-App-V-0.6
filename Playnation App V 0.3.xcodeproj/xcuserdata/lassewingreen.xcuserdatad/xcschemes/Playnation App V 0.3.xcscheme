@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Playnation App V 0.3.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AAE67DAA18B351C300C1914B"
+               BuildableName = "MagicalRecordTests.xctest"
+               BlueprintName = "MagicalRecordTests"
+               ReferencedContainer = "container:Playnation App V 0.3.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

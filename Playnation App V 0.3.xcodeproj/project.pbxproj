@@ -22,7 +22,6 @@
 		60253BEC189BB002008B0243 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60253BD0189BAFFD008B0243 /* CoreData.framework */; };
 		60253BF4189BB003008B0243 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60253BF2189BB003008B0243 /* InfoPlist.strings */; };
 		60253BF6189BB003008B0243 /* Playnation_App_V_0_3Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 60253BF5189BB003008B0243 /* Playnation_App_V_0_3Tests.m */; };
-		60253C00189BBB4E008B0243 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60253BFF189BBB4E008B0243 /* Main.storyboard */; };
 		60253C0A189BBC14008B0243 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60253C07189BBC14008B0243 /* NewsViewController.m */; };
 		60253C0B189BBC14008B0243 /* NewsDetailedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60253C09189BBC14008B0243 /* NewsDetailedViewController.m */; };
 		60253C10189BBC37008B0243 /* GamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60253C0D189BBC37008B0243 /* GamesViewController.m */; };
@@ -41,6 +40,7 @@
 		60253C36189BBE9F008B0243 /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 60253C34189BBE9F008B0243 /* UITabBarController+ShowHideBar.m */; };
 		60253C39189BBF9B008B0243 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 60253C37189BBF9B008B0243 /* menu.png */; };
 		60253C3A189BBF9B008B0243 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60253C38189BBF9B008B0243 /* menu@2x.png */; };
+		60A8524218B37D7B006B6049 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A8524118B37D7B006B6049 /* Main.storyboard */; };
 		8A830FF79B254313B97AACFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEC6E580ACD4E63B5CAC219 /* libPods.a */; };
 		AA289E4A18B35C7100C6C799 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AA289E3518B35C7100C6C799 /* AFHTTPClient.m */; };
 		AA289E4B18B35C7100C6C799 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA289E3718B35C7100C6C799 /* AFHTTPRequestOperation.m */; };
@@ -98,7 +98,6 @@
 		60253BF1189BB003008B0243 /* Playnation App V 0.3Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Playnation App V 0.3Tests-Info.plist"; sourceTree = "<group>"; };
 		60253BF3189BB003008B0243 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		60253BF5189BB003008B0243 /* Playnation_App_V_0_3Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Playnation_App_V_0_3Tests.m; sourceTree = "<group>"; };
-		60253BFF189BBB4E008B0243 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		60253C06189BBC14008B0243 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		60253C07189BBC14008B0243 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		60253C08189BBC14008B0243 /* NewsDetailedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailedViewController.h; sourceTree = "<group>"; };
@@ -133,6 +132,7 @@
 		60253C34189BBE9F008B0243 /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
 		60253C37189BBF9B008B0243 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		60253C38189BBF9B008B0243 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		60A8524118B37D7B006B6049 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AA289E3418B35C7100C6C799 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		AA289E3518B35C7100C6C799 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		AA289E3618B35C7100C6C799 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				AA563CAA18B18D61007B37B2 /* Model */,
 				60253BDB189BAFFE008B0243 /* AppDelegate.h */,
 				60253BDC189BAFFE008B0243 /* AppDelegate.m */,
-				60253BFF189BBB4E008B0243 /* Main.storyboard */,
+				60A8524118B37D7B006B6049 /* Main.storyboard */,
 				AAE67C8318B2670100C1914B /* CoreDataTableViewController.h */,
 				AAE67C8418B2670100C1914B /* CoreDataTableViewController.m */,
 				60253BE1189BAFFF008B0243 /* Images.xcassets */,
@@ -648,9 +648,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				60253C39189BBF9B008B0243 /* menu.png in Resources */,
-				60253C00189BBB4E008B0243 /* Main.storyboard in Resources */,
 				60253C3A189BBF9B008B0243 /* menu@2x.png in Resources */,
 				AA289E5418B35C7100C6C799 /* LICENSE in Resources */,
+				60A8524218B37D7B006B6049 /* Main.storyboard in Resources */,
 				60253BD7189BAFFE008B0243 /* InfoPlist.strings in Resources */,
 				60253BE2189BAFFF008B0243 /* Images.xcassets in Resources */,
 				AA289E5518B35C7100C6C799 /* README.md in Resources */,

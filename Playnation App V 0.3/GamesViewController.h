@@ -11,10 +11,15 @@
 @interface GamesViewController : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *GamesTableView;
-@property (strong,nonatomic) NSArray *gamesJsonWrapper;
-@property (strong,nonatomic) NSArray *gamesTableArray;
-@property (weak, nonatomic)NSString *gameDescription;
-@property (weak, nonatomic)NSString *gameName;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
+@property (strong,nonatomic) NSArray *gamesJsonWrapper;
+@property (strong,nonatomic) NSArray *gamesTableArray;
+
+@property (weak, nonatomic)NSString *gameDescription;
+@property (weak, nonatomic)NSString *gameName;
+@property (strong, nonatomic) NSString *gameType;
+@property (strong, nonatomic) NSString *gameDate;
+@property (strong, nonatomic) NSString *gameAvatar;
+@property (strong, nonatomic) NSString *gameRating;
 @end

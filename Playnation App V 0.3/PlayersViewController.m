@@ -9,6 +9,7 @@
 #import "PlayersViewController.h"
 #import "NSString+StripHTMLwithRegEX.h"
 #import "SWRevealViewController.h"
+#import "PlayerCell.h"
 
 @interface PlayersViewController ()
 
@@ -29,68 +30,81 @@
 }
 
 - (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = @"Players";
+    //set white text for NavController
+    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+                                    [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
+    self.navigationController.navigationBar.titleTextAttributes = textAttributes;
+
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
+    
+    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
+    _sidebarButton.target = self.revealViewController;
+    _sidebarButton.action = @selector(revealToggle:);
+    
+    // Set the gesture
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+    //Custom TableView Background
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"common_bg"]];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    UIEdgeInsets inset =UIEdgeInsetsMake(1, 0, 0, 0);
+    self.tableView.contentInset = inset;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    //  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    
     {
-        [super viewDidLoad];
-        self.title = @"Players";
+        NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
         
+        NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItemiOS.php"];
+        NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+        NSString * params =@"tableName=player";
+        [urlRequest setHTTPMethod:@"POST"];
+        [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
         
-        // Set the side bar button action. When it's tapped, it'll show up the sidebar.
-        _sidebarButton.target = self.revealViewController;
-        _sidebarButton.action = @selector(revealToggle:);
-        
-        // Set the gesture
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        
-        //  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        
-        {
-            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
-            
-            NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItemiOS.php"];
-            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-            NSString * params =@"tableName=player";
-            [urlRequest setHTTPMethod:@"POST"];
-            [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest
-                                                               completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest
+                                                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                               
+                                                               NSLog(@"Response:%@ %@\n", response, error);
+                                                               
+                                                               
+                                                               if(error == nil)
+                                                               {
                                                                    
-                                                                   NSLog(@"Response:%@ %@\n", response, error);
+                                                                   NSLog(@"Data = %@",data);
                                                                    
+                                                                   NSError *jsonNewsError = nil;
                                                                    
-                                                                   if(error == nil)
-                                                                   {
-                                                                       
-                                                                       NSLog(@"Data = %@",data);
-                                                                       
-                                                                       NSError *jsonNewsError = nil;
-                                                                       
-                                                                       playerJsonWrapper = [NSJSONSerialization
-                                                                                          JSONObjectWithData:data
-                                                                                          options:NSJSONReadingAllowFragments
-                                                                                          error:&jsonNewsError];
-                                                                       
-                                                                       if (!playerJsonWrapper) {
-                                                                           NSLog(@"Error parsing JSON: %@", jsonNewsError);
-                                                                       }
-                                                                       
-                                                                       else {
-                                                                           NSLog(@"PlayerJsonList: %@", playerJsonWrapper);
-                                                                           
-                                                                           [PlayersTableView reloadData];
-                                                                           
-                                                                           playerTableArray = playerJsonWrapper;
-                                                                           
-                                                                       }
+                                                                   playerJsonWrapper = [NSJSONSerialization
+                                                                                        JSONObjectWithData:data
+                                                                                        options:NSJSONReadingAllowFragments
+                                                                                        error:&jsonNewsError];
+                                                                   
+                                                                   if (!playerJsonWrapper) {
+                                                                       NSLog(@"Error parsing JSON: %@", jsonNewsError);
                                                                    }
                                                                    
-                                                               }];
-            [dataTask resume];
-            
-        }
+                                                                   else {
+                                                                       NSLog(@"PlayerJsonList: %@", playerJsonWrapper);
+                                                                       
+                                                                       [PlayersTableView reloadData];
+                                                                       
+                                                                       playerTableArray = playerJsonWrapper;
+                                                                       
+                                                                   }
+                                                               }
+                                                               
+                                                           }];
+        [dataTask resume];
+        
     }
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -103,7 +117,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+    
     // Return the number of sections.
     return 1;
 }
@@ -114,58 +128,50 @@
     return [playerJsonWrapper count];
 }
 
+-(UIImage *) cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIImage *backgroundCell = [UIImage imageNamed:@"cell_background"];
+    return backgroundCell;
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playersCell"];
+    PlayerCell *cell = (PlayerCell *) [tableView dequeueReusableCellWithIdentifier:@"playersCell"];
     
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"playersCell"];
+        cell = [[PlayerCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"playersCell"];
     }
     
-    cell.textLabel.text = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"LastName"];
-    cell.detailTextLabel.text = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"FirstName"];
+    cell.playerFirstAndLastNameLabel.text = [NSString stringWithFormat:@"%@ %@", [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"FirstName"],[[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"LastName"]] ;
+    cell.playerNickLabel.text = [[playerJsonWrapper objectAtIndex:indexPath.row] objectForKey:@"NickName"];
+    
+    
+    
+    //    if ([[[playerJsonWrapper objectAtIndex:indexPath.row] objectForKey:@"DateOfBirth"]isKindOfClass:[NSString class]]){
+    //        NSDate *birthday =[[playerJsonWrapper objectAtIndex:indexPath.row] objectForKey:@"DateOfBirth"];
+    //        NSDate *now= [NSDate date];
+    //        NSDateComponents *ageComponents = [[NSCalendar currentCalendar]components: NSYearCalendarUnit fromDate:birthday toDate:now options:0];
+    //        NSInteger age = [ageComponents year];
+    //        cell.playerAgeLabel.text =[NSString stringWithFormat:@"%ld",(long)age];
+    //
+    //
+    //    }else{
+    //        cell.playerAgeLabel.text = @"0";
+    //    }
+    cell.playerCountryLabel.text = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"Country"];
+    cell.playerImageView.image = [UIImage imageNamed:@"playnationLogo.png"];
+    cell.playerImageView.clipsToBounds = YES;
+    
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
@@ -177,12 +183,11 @@
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         PlayersViewController *playerDestViewController = segue.destinationViewController;
-        playerDestViewController.playerFirstName = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"FirstName"];
-        playerDestViewController.playerLastName = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"LastName"];
-        playerDestViewController.playerNick = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"NickName"];
-        playerDestViewController.playerAge = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"DateOfBirth"];
-        playerDestViewController.playerCity = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"City"];
-        playerDestViewController.playerCountry = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"Country"];
+        playerDestViewController.playerName = [NSString stringWithFormat:@"%@ %@",[[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"FirstName"],[[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"LastName"]];
+        playerDestViewController.playerNickname = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"NickName"];
+        playerDestViewController.playerBirthday = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"DateOfBirth"];
+        playerDestViewController.playerAddress = [NSString stringWithFormat:@"%@ %@ %@", [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"Address"] ,[[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"City"] ,[[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"Country"] ] ;
+        playerDestViewController.playerRating = [[playerTableArray objectAtIndex:indexPath.row] objectForKey:@"Country"];
         
     }
 }

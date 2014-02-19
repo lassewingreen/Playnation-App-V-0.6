@@ -9,6 +9,10 @@
 #import "CompaniesViewController.h"
 #import "NSString+StripHTMLwithRegEX.h"
 #import "SWRevealViewController.h"
+#import "CompaniesCell.h"
+#import "Companies.h"
+#import "CoreData+MagicalRecord.h"
+#import "NSDictionary+LowercaseDicionary.h"
 
 @interface CompaniesViewController ()
 
@@ -16,7 +20,7 @@
 
 @implementation CompaniesViewController
 
-@synthesize companiesTableArray, companiesJsonWrapper, CompaniesTableView;
+@synthesize companiesTableArray, companiesJsonWrapper, CompaniesTableView ,companiesProfilePic, companyDescription, companyFounded,companyHeadquarter, companyJoined, companyName, companyNoOfEmployees, companyType, companyWebsite;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,9 +33,27 @@
 
 - (void)viewDidLoad
 {
+    
+    //[self refreshData];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
     [super viewDidLoad];
-
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     self.title = @"Companies";
+    //set white text for NavController
+    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+                                    [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
+    self.navigationController.navigationBar.titleTextAttributes = textAttributes;
+
+    
+    // Custom TableView Background
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"common_bg"]];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    
+    UIEdgeInsets inset = UIEdgeInsetsMake(1, 0, 0, 0);
+    self.tableView.contentInset = inset;
+    
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     _sidebarButton.target = self.revealViewController;
@@ -41,7 +63,6 @@
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     //  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
     
     {
         NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -64,12 +85,13 @@
                                                                    
                                                                    NSLog(@"Data = %@",data);
                                                                    
+                                                                   
                                                                    NSError *jsonNewsError = nil;
                                                                    
                                                                    companiesJsonWrapper = [NSJSONSerialization
-                                                                                       JSONObjectWithData:data
-                                                                                       options:NSJSONReadingAllowFragments
-                                                                                       error:&jsonNewsError];
+                                                                                           JSONObjectWithData:data
+                                                                                           options:NSJSONReadingAllowFragments
+                                                                                           error:&jsonNewsError];
                                                                    
                                                                    if (!companiesJsonWrapper) {
                                                                        NSLog(@"Error parsing JSON: %@", jsonNewsError);
@@ -89,7 +111,10 @@
         [dataTask resume];
         
     }
-
+    
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,7 +127,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+    
     // Return the number of sections.
     return 1;
 }
@@ -113,69 +138,71 @@
     return [companiesJsonWrapper count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIImage *)cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"companiesCell"];
+    NSInteger rowCount = [self tableView:[self tableView] numberOfRowsInSection:0];
+    NSInteger rowIndex = indexPath.row;
+    UIImage *background = nil;
     
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"companiesCell"];
+    if (rowIndex == 0) {
+        background = [UIImage imageNamed:@"cell_background"];
+    } else if (rowIndex == rowCount - 1) {
+        background = [UIImage imageNamed:@"cell_background"];
+    } else {
+        background = [UIImage imageNamed:@"cell_background"];
     }
     
-    cell.textLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyName"];
-    cell.detailTextLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyType"];
+    return background;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CompaniesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"companiesCell" forIndexPath:indexPath];
+    
+    if(cell == nil){
+        cell = [[CompaniesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"companiesCell"];
+    }
+    
+    //    cell.textLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyName"];
+    //    cell.detailTextLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyType"];
+    
+    cell.companiesTitleLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyName"];
+    cell.companiesDescLabel.text = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyDesc"];
+    //Set the image of the cell and make it round
+    cell.companiesImage.image = [UIImage imageNamed:@"playnationLogo.png"];
+    cell.companiesImage.clipsToBounds = YES;
+    cell.companiesImage.layer.borderWidth = 2.0f;
+    cell.companiesImage.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.5f].CGColor;
+    cell.companiesImage.layer.cornerRadius = 25.0f;
+    
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
-// In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showCompanyDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        CompaniesViewController *compDestViewController = segue.destinationViewController;
+        compDestViewController.companyName =  [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyName"];
+        compDestViewController.companyType = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyType"];
+        compDestViewController.companyHeadquarter = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyAddress"];
+        compDestViewController.companyFounded = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"Founded"];
+        compDestViewController.companyJoined = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CreatedTime"];
+        compDestViewController.companyDescription = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"CompanyDesc"];
+        compDestViewController.companyNoOfEmployees = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"Employees"];
+        compDestViewController.companyWebsite = [[companiesTableArray objectAtIndex:indexPath.row] objectForKey:@"URL"];
+        
+    }
 }
-
- */
 
 @end

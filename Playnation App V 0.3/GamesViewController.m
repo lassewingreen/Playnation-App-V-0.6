@@ -9,6 +9,7 @@
 #import "GamesViewController.h"
 #import "NSString+StripHTMLwithRegEX.h"
 #import "SWRevealViewController.h"
+#import "GamesCell.h"
 
 @interface GamesViewController ()
 
@@ -29,14 +30,30 @@
 
 - (void)viewDidLoad
 {
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
     [super viewDidLoad];
     self.title = @"Games";
+    //set white text for NavController
+    NSDictionary *textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIColor whiteColor],NSForegroundColorAttributeName,
+                                    [UIColor whiteColor],NSBackgroundColorAttributeName,nil];
+    self.navigationController.navigationBar.titleTextAttributes = textAttributes;
+
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+    
+    //Custom TableView Background
+    self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"common_bg"]];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    UIEdgeInsets inset =UIEdgeInsetsMake(1, 0, 0, 0);
+    self.tableView.contentInset = inset;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     
     //  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -47,7 +64,7 @@
         
         NSURL * url = [NSURL URLWithString:@"http://playnation.eu/beta/hacks/getItemiOS.php"];
         NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-        NSString * params =@"tableName=games&lastID=10";
+        NSString * params =@"tableName=games";
         [urlRequest setHTTPMethod:@"POST"];
         [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
         
@@ -66,9 +83,9 @@
                                                                    NSError *jsonNewsError = nil;
                                                                    
                                                                    gamesJsonWrapper = [NSJSONSerialization
-                                                                                        JSONObjectWithData:data
-                                                                                        options:NSJSONReadingAllowFragments
-                                                                                        error:&jsonNewsError];
+                                                                                       JSONObjectWithData:data
+                                                                                       options:NSJSONReadingAllowFragments
+                                                                                       error:&jsonNewsError];
                                                                    
                                                                    if (!gamesJsonWrapper) {
                                                                        NSLog(@"Error parsing JSON: %@", jsonNewsError);
@@ -77,7 +94,7 @@
                                                                    else {
                                                                        NSLog(@"jsonList: %@", gamesJsonWrapper);
                                                                        
-                                                                      [GamesTableView reloadData];
+                                                                       [GamesTableView reloadData];
                                                                        
                                                                        gamesTableArray = gamesJsonWrapper;
                                                                        
@@ -100,7 +117,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+    
     // Return the number of sections.
     return 1;
 }
@@ -111,64 +128,43 @@
     return [gamesJsonWrapper count];
 }
 
+-(UIImage *) cellBackgroundForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIImage *backgroundCell = [UIImage imageNamed:@"cell_background"];
+    return backgroundCell;
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"gamesCell"];
+    GamesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"gamesCell"];
     
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"gamesCell"];
+        cell = [[GamesCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"gamesCell"];
     }
     
-    cell.textLabel.text = [[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"GameName"];
+    cell.gamesName.text = [[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"GameName"];
     
     if ([[[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"Developer"] isKindOfClass:[NSString class]]){
         cell.detailTextLabel.text = [[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"Developer"];
         
-    
+        
     }else{
-    cell.detailTextLabel.text = @"Companie";
+        cell.detailTextLabel.text = @"Companie";
     }
+    
+    
+    cell.gamesImage.image = [UIImage imageNamed:@"playnationLogo.png"];
+    cell.gamesImage.clipsToBounds = YES;
+    UIImage *background = [self cellBackgroundForRowAtIndexPath:indexPath];
+    UIImageView *cellBackgroundView = [[UIImageView alloc] initWithImage:background];
+    cellBackgroundView.image = background;
+    cell.backgroundView = cellBackgroundView;
+    
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
@@ -180,8 +176,9 @@
         GamesViewController *gamesDestViewController = segue.destinationViewController;
         gamesDestViewController.gameName = [[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"GameName"];
         gamesDestViewController.gameDescription = [[gamesTableArray objectAtIndex:indexPath.row] objectForKey:@"GameDesc"];
+        
     }
-
+    
 }
 
 

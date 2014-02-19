@@ -28,6 +28,7 @@
     [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Companies class]];
     [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Groups class]];
     
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
     
        return YES;
 }

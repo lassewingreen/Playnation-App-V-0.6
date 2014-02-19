@@ -193,11 +193,11 @@ NSString * IDKey = nil;
             
             for (NSDictionary *record in records) {
                 //Make Keys Lowercase
-                id lowercaseRecord = [record dictionaryWithLowercaseKeys];
+               // id lowercaseRecord = [record dictionaryWithLowercaseKeys];
                 
                 //NSLog(@"LOWERCASE: %@",lowercaseRecord);
                 
-                [self newManagedObjectWithClassName:className forRecord:lowercaseRecord];
+                [self newManagedObjectWithClassName:className forRecord:[record dictionaryWithLowercaseKeys]];
             }
         } else {
             //

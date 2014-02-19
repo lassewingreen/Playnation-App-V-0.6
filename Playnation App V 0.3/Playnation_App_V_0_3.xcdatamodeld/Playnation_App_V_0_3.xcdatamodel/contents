@@ -85,35 +85,18 @@
         <attribute name="uRL" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Groups" representedClassName="Groups" syncable="YES">
-        <attribute name="applicantCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="createdTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="downloadableItems" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="eventCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="eventParticipantCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="faction" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="forumMemberCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="gameName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupType1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupType2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="iD_CREATOR" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="iD_GAME" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="iD_GROUP" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="iD_GROUPTYPE1" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="iD_GROUPTYPE2" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="iD_LANGUAGE" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="iD_GROUP" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="inviteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="isLiked" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isMember" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="likeCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="mediaCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="memberCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="server" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shareCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="tags" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLiked" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isMember" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memberCount" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="News" representedClassName="News" syncable="YES">
         <attribute name="dislikeCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -235,9 +218,9 @@
     </entity>
     <elements>
         <element name="Companies" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Games" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Groups" positionX="0" positionY="0" width="0" height="0"/>
         <element name="News" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Players" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Games" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

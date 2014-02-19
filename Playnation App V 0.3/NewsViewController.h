@@ -26,6 +26,10 @@
 
 }
 
+
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSArray *companies;
+
 @property (weak, nonatomic)NSString *headline;
 @property (weak, nonatomic)NSString *newsText;
 @property (weak, nonatomic)IBOutlet UIBarButtonItem *sidebarButton;

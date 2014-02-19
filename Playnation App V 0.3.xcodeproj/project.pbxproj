@@ -60,11 +60,11 @@
 		AA563CB718B20563007B37B2 /* NSString+CatKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA563CB018B20563007B37B2 /* NSString+CatKit.m */; };
 		AA563CB818B20563007B37B2 /* PNAppPostClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AA563CB218B20563007B37B2 /* PNAppPostClient.m */; };
 		AA563CB918B20563007B37B2 /* AFNSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = AA563CB418B20563007B37B2 /* AFNSyncEngine.m */; };
-		AA859FFB18B36B7700DF8A00 /* Groups.m in Sources */ = {isa = PBXBuildFile; fileRef = AA859FFA18B36B7700DF8A00 /* Groups.m */; };
 		AA859FFE18B36B7700DF8A00 /* Players.m in Sources */ = {isa = PBXBuildFile; fileRef = AA859FFD18B36B7700DF8A00 /* Players.m */; };
 		AA85A00118B36B7700DF8A00 /* Games.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85A00018B36B7700DF8A00 /* Games.m */; };
 		AA85A00418B36B7700DF8A00 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85A00318B36B7700DF8A00 /* News.m */; };
 		AA85A00718B36B7700DF8A00 /* Companies.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85A00618B36B7700DF8A00 /* Companies.m */; };
+		AA85A01018B40F1800DF8A00 /* Groups.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85A00F18B40F1800DF8A00 /* Groups.m */; };
 		AAE67C8518B2670100C1914B /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE67C8418B2670100C1914B /* CoreDataTableViewController.m */; };
 		AAE67DC118B3545200C1914B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE67DC018B3545200C1914B /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -166,8 +166,6 @@
 		AA563CB218B20563007B37B2 /* PNAppPostClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNAppPostClient.m; sourceTree = "<group>"; };
 		AA563CB318B20563007B37B2 /* AFNSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNSyncEngine.h; sourceTree = "<group>"; };
 		AA563CB418B20563007B37B2 /* AFNSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNSyncEngine.m; sourceTree = "<group>"; };
-		AA859FF918B36B7700DF8A00 /* Groups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Groups.h; sourceTree = "<group>"; };
-		AA859FFA18B36B7700DF8A00 /* Groups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Groups.m; sourceTree = "<group>"; };
 		AA859FFC18B36B7700DF8A00 /* Players.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Players.h; sourceTree = "<group>"; };
 		AA859FFD18B36B7700DF8A00 /* Players.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Players.m; sourceTree = "<group>"; };
 		AA859FFF18B36B7700DF8A00 /* Games.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Games.h; sourceTree = "<group>"; };
@@ -176,6 +174,8 @@
 		AA85A00318B36B7700DF8A00 /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
 		AA85A00518B36B7700DF8A00 /* Companies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Companies.h; sourceTree = "<group>"; };
 		AA85A00618B36B7700DF8A00 /* Companies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Companies.m; sourceTree = "<group>"; };
+		AA85A00E18B40F1800DF8A00 /* Groups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Groups.h; sourceTree = "<group>"; };
+		AA85A00F18B40F1800DF8A00 /* Groups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Groups.m; sourceTree = "<group>"; };
 		AAE67C8318B2670100C1914B /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		AAE67C8418B2670100C1914B /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		AAE67D6118B3511E00C1914B /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
@@ -474,6 +474,8 @@
 			isa = PBXGroup;
 			children = (
 				60253BDE189BAFFE008B0243 /* Playnation_App_V_0_3.xcdatamodeld */,
+				AA85A00E18B40F1800DF8A00 /* Groups.h */,
+				AA85A00F18B40F1800DF8A00 /* Groups.m */,
 				AA85A00518B36B7700DF8A00 /* Companies.h */,
 				AA85A00618B36B7700DF8A00 /* Companies.m */,
 				AA85A00218B36B7700DF8A00 /* News.h */,
@@ -482,8 +484,6 @@
 				AA85A00018B36B7700DF8A00 /* Games.m */,
 				AA859FFC18B36B7700DF8A00 /* Players.h */,
 				AA859FFD18B36B7700DF8A00 /* Players.m */,
-				AA859FF918B36B7700DF8A00 /* Groups.h */,
-				AA859FFA18B36B7700DF8A00 /* Groups.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -735,7 +735,7 @@
 				AA85A00418B36B7700DF8A00 /* News.m in Sources */,
 				AA289E4B18B35C7100C6C799 /* AFHTTPRequestOperation.m in Sources */,
 				60253C1C189BBC64008B0243 /* GroupsViewController.m in Sources */,
-				AA859FFB18B36B7700DF8A00 /* Groups.m in Sources */,
+				AA85A01018B40F1800DF8A00 /* Groups.m in Sources */,
 				60253C10189BBC37008B0243 /* GamesViewController.m in Sources */,
 				AA289E4A18B35C7100C6C799 /* AFHTTPClient.m in Sources */,
 				60253C2F189BBCB4008B0243 /* SWRevealViewController.m in Sources */,

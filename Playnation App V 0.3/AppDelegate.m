@@ -7,11 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "CoreData+MagicalRecord.h"
 #import "AFNSyncEngine.h"
 #import "Companies.h"
 #import "Groups.h"
-
 
 @implementation AppDelegate
 
@@ -21,15 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"Playnation_App_V_0_3.sqlite"];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"AFN_Magical_Record_Example.sqlite"];
+    
+    [MagicalRecord currentStack];
     
     //[MagicalRecord setupCoreDataStackWithInMemoryStore];
     
     [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Companies class]];
-    [[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Groups class]];
+    //[[AFNSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Groups class]];
     
-    
-       return YES;
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -40,7 +39,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -51,13 +50,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[AFNSyncEngine sharedEngine] startSync];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+    [MagicalRecord cleanUp];
 }
 
 - (void)saveContext
@@ -66,11 +64,11 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
-        } 
+        }
     }
 }
 
@@ -99,7 +97,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Playnation_App_V_0_3" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"AFN_Magical_Record_Example" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -112,7 +110,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Playnation_App_V_0_3.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"AFN_Magical_Record_Example.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -120,7 +118,7 @@
         /*
          Replace this implementation with code to handle the error appropriately.
          
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
          
          Typical reasons for an error here include:
          * The persistent store is not accessible;
@@ -142,7 +140,7 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
+    }
     
     return _persistentStoreCoordinator;
 }

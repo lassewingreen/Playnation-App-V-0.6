@@ -10,6 +10,9 @@
 #import "NewsDetailedViewController.h"
 #import "SWRevealViewController.h"
 #import "NSString+StripHTMLwithRegEX.h"
+#import "AFNSyncEngine.h"
+#import "Companies.h"
+
 
 @interface NewsViewController ()
 
@@ -17,6 +20,9 @@
 @end
 
 @implementation NewsViewController
+
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize companies = _companies;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,7 +37,12 @@
 {
     [super viewDidLoad];
     self.title = @"News";
+    
+    self.companies = [NSArray array];
 
+     self.managedObjectContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    
+    [self loadRecordsFromCoreData];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     _sidebarButton.target = self.revealViewController;
@@ -105,6 +116,50 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kAFNSyncEngineSyncCompletedNotificationName
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [self loadRecordsFromCoreData];
+                                                      [self.tableView reloadData];
+                                                  }];
+    
+    [[AFNSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress"
+                                      options:NSKeyValueObservingOptionNew
+                                      context:nil];
+}
+
+
+
+
+
+
+
+- (void)loadRecordsFromCoreData
+{
+    [self.managedObjectContext performBlockAndWait:^{
+        [self.managedObjectContext reset];
+        NSError *error = nil;
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Companies"];
+        [request setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdTime" ascending:NO]]];
+        self.companies = [self.managedObjectContext executeFetchRequest:request error:&error];
+        NSLog(@"loadRecordsFromCoreData:%@", self.companies);
+    }];
+    
+    [self.managedObjectContext reset];
+    
+    self.companies = [Companies MR_findAllSortedBy:@"createdTime"
+                                         ascending:NO
+                                     withPredicate:nil
+                                         inContext:self.managedObjectContext];
+    
+    NSLog(@"loadRecordsFromCoreData:companies:%@", self.companies);
 }
 
 
